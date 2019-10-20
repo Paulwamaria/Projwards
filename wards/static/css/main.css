@@ -80,3 +80,22 @@
     background: #fff;
     color: #000;
 }
+.fix{
+
+position:absolute;
+max-height: 75vh;
+
+overflow:hidden;
+
+}
+.site-of-day-bg{
+    background-color: rgba(0,0,0,0.5);
+    position:relative;
+    height:75vh;
+    margin-left:15px;
+    width:98%;
+}
+.img{
+    width:100%;
+ 
+}
