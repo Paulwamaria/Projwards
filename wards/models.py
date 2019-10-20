@@ -1,10 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
+from users.models import Profile
 
 
 # Create your models here.
 
 class Project(models.Model):
-    title = models.CharField(max-max_length=60)
+    title = models.CharField(max_length=60)
     image = models.ImageField(upload_to='media/wards/', blank = True, null =True)
     descrption = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -27,7 +30,7 @@ class Project(models.Model):
 
 class Review(models.Model):
     
-    Project = models.ForeignKey(Image, related_name = 'project_reviews',on_delete = models.CASCADE)
+    Project = models.ForeignKey(Project, related_name = 'project_reviews',on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
    
     content = models.TextField()
@@ -45,10 +48,19 @@ class Review(models.Model):
 class Vote(models.Model):
     project = models.ForeignKey(Project, related_name = 'project_votes', on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    design_votes = models.IntegerRangeField(min_value=0, max_value=10)
-    content_votes = models.IntegerRangeField(min_value=0, max_value=10)
-    usability_votes = models.IntegerRangeField(min_value=0, max_value=10)
-    creativity_votes = models.IntegerRangeField(min_value=0, max_value=10)
+    design_votes = models.IntegerField(
+        default=1,
+        validators=[MaxValueValidator(10), MinValueValidator(0)])
+     
+    content_votes = models.IntegerField(
+        default=1,
+        validators=[MaxValueValidator(10), MinValueValidator(0)])
+    usability_votes = models.IntegerField(
+        default=1,
+        validators=[MaxValueValidator(10), MinValueValidator(0)])
+    creativity_votes = models.IntegerField(
+        default=1,
+        validators=[MaxValueValidator(10), MinValueValidator(0)])
     
 
     def __str__(self):
