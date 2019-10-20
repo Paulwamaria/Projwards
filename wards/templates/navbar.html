@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-inverse bg-light">
+            <div class="container-fluid nv">
+                <div class="navbar-header">
+
+               
+                
+
+
+                </div>
+
+                <div class=" navbar-right">
+
+                        <a class="navbar-brand text-dark inst d-inline-flex" href="{% url 'home' %}" id="inst">Projwards</a>
+
+                    <form class="navbar-form d-inline-flex ml-5" role="search" action="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="search by project name" name="search_user">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i
+                                        class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="navbar-nav d-inline-flex ">
+              
+
+                    <div class="d-inline-flex prof-links">
+                        <a class="nav-item nav-link mr-4 text-dark" href="#">Login</a>
+                        <a class="nav-item nav-link ml-4 text-dark" href="#">Register</a>
+                        <input class="btn btn-lg bg-success ml-4" type="submit" value = "Submit your project here"> 
+                    </div>
+
+                    <div class="d-inline-flex">
+                       
+                    </div>
+
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+
+</body>
+
+</html>
