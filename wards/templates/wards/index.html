@@ -18,4 +18,46 @@
 
 
 
+<div class="container-fluid all">
+    <div class="row">
+        {% for project in projects %}
+
+        <div class="col-md-3">
+            <div class=" card ">
+
+                <div class="card-body">
+                    <img src="{{project.image.url}}" class="img-responsive imgs" id='imag' alt=" ">
+
+                    <h6 class="text-center text-info">{{project.title}}</h6>
+                    <p class="text-dark image-descrips" id="image-descrip">{{project.description |slice:":50"}}...</p>
+
+                </div>
+
+                <div class="card-footer">
+
+                    <p> <img class=" prof-img" src="{{project.profile.profile_pic.url}}" id="prof-pic"> By
+                        {{project.profile.user.username}}  on {{project.datepublished}}</p>
+
+                    {% if project.profile == user.profile %}
+
+                    <a href="{% url 'project-detail' project.id %}">Edit</a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
 {% endblock %}
