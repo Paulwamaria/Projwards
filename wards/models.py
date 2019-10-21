@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from users.models import Profile
@@ -9,7 +10,7 @@ from users.models import Profile
 class Project(models.Model):
     title = models.CharField(max_length=60)
     image = models.ImageField(upload_to='media/wards/', blank = True, null =True)
-    descrption = models.TextField()
+    description = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     project_link = models.URLField(unique=True, blank = True, null =True)
@@ -27,6 +28,14 @@ class Project(models.Model):
 
     def delete_project(self):
         self.delete()
+
+    def get_absolute_url(self):
+        return reverse('project-detail',kwargs = {'pk':self.pk} )
+
+    
+    def datepublished(self):
+        return self.created_on.strftime('%B %d %Y')
+
 
 class Review(models.Model):
     
