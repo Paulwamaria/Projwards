@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import ProjwardsRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile
 
 def register(request):
@@ -11,7 +13,8 @@ def register(request):
         if form.is_valid():
             form.save()
             email = form.cleaned_data['email']
-            name = form.cleaned_data['name']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
             username = form.cleaned_data.get('username')
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
@@ -43,4 +46,10 @@ def profile(request):
         'p_form':p_form
     }
     return render(request, 'users/profile.html',context)
+
+
+
+
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = Profile
 
