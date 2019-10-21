@@ -47,14 +47,18 @@
                         <div class="d-inline-flex prof-links">
                             <a class="nav-item nav-link mr-2 text-dark" href="{% url 'logout' %}">Logout</a>
 
-                            <input class="btn btn-lg bg-success ml-2" type="submit" value="Submit your project here">
+                            <a class="nav-item nav-link mr-2 text-dark" href="{% url 'project-create' %}"> <input
+                                    class="btn btn-lg bg-success" type="submit" value="Submit your project here"></a>
+
+
                         </div>
                         {% else %}
 
                         <div class="d-inline-flex">
                             <a class="nav-item nav-link mr-2 text-dark" href="{% url 'login' %}">Login</a>
                             <a class="nav-item nav-link ml-2 text-dark" href="{% url 'register' %}">Register</a>
-                            <input class="btn btn-lg bg-success ml-2" type="submit" value="Submit your project here">
+                            <a class="nav-item nav-link mr-2 text-dark" href="{% url 'project-create' %}"> <input
+                                    class="btn btn-lg bg-success" type="submit" value="Submit your project here"></a>
                         </div>
 
                         {% endif %}
@@ -75,11 +79,10 @@
 
                 <navs id="navs" class="mt-0 text-dark">
 
+                    {% if user.is_authenticated %}
 
-                    <a href="register" class="text-dark">Register</a>
-                    <a href=" # " class="text-dark">Login</a>
-
-
+                    <a href="{% url 'register' %}" class="text-dark">Register</a>
+                    <a href=" {% url 'profile-detail' user.username %}" class="text-dark">Profile</a>
 
                     <a href="/" class="text-dark">Home</a>
 
@@ -92,6 +95,19 @@
                     <a href="/" class="text-dark">collections</a>
 
                     <a href="#" class="text-dark">About</a>
+                    {% else %}
+                    <a href="/" class="text-dark">Home</a>
+
+                    <a href="/" class="text-dark">Winners</a>
+
+
+                    <a href="/" class="text-dark">Nominees</a>
+
+
+                    <a href="/" class="text-dark">collections</a>
+
+                    <a href="#" class="text-dark">About</a>
+                    {% endif %}
                 </navs>
 
             </div>
