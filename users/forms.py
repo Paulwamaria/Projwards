@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
 
 
 
 class ProjwardsRegistrationForm(UserCreationForm):
     username = forms.CharField(max_length=60,required = True, label='', widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
     email = forms.EmailField(required = True,label='',widget=forms.TextInput(attrs = {'class':'form-control','placeholder':'Email'}))
-    fullName = forms.CharField(max_length=60,required = True, label='', widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Full Name'}))
+    name = forms.CharField(max_length=256,required = True, label='', widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Your Full Name'}))
     
     password1 = forms.CharField(max_length = 30,required = True, label='', widget = forms.TextInput(attrs={
         "class":"form-control",
@@ -24,12 +25,12 @@ class ProjwardsRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email','fullName','username','password1','password2']
+        fields = ['email','name','username','password1','password2']
 
     def save(self, commit=True):
         user =super(ProjwardsRegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
-        user.fullName = self.cleaned_data['fullName']
+        user.name = self.cleaned_data['name']
         user.username = self.cleaned_data['username']
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
@@ -39,3 +40,19 @@ class ProjwardsRegistrationForm(UserCreationForm):
 
 
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required = True,label='',widget=forms.TextInput(attrs = {'class':'form-control','placeholder':'Email'}))
+    name = forms.CharField(max_length=256,required = True, label='', widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Your Full Name'}))
+    username = forms.CharField(max_length=60,required = True, label='', widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
+
+    class Meta:
+        model = User
+        fields = ['email','name','username']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_pic','bio']
