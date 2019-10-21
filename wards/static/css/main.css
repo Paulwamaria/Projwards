@@ -107,3 +107,28 @@ overflow:hidden;
     height:auto;
     border-radius: 50%;
 }
+.media{
+    margin-left: 20px;
+}
+.full-profile{
+    max-width: 640px;
+    height: auto;
+}
+#imag {
+    margin-top:2px;
+    width: 300px;
+    max-height: 200px;
+    border-radius: 5%;
+
+}
+.card{
+    min-height: 400px;
+}
+#imag:hover {
+    opacity: 0.5;
+}
+
+.img-posts{
+    max-width: 620px;
+    height: auto;
+}
