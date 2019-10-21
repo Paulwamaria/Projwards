@@ -1,0 +1,28 @@
+{% extends 'wards/base.html' %}
+
+
+{% block content %}
+<h2 class="text-center mb-3">Uploads by {{view.kwargs.username}}</h2>
+{% for project in projects %}
+
+<div class="card card-default">
+    <div class="card-header">
+        <img src="{{project.profile.profile_pic.url}}" class="rounded-circle prof-img img-responsive" id="">
+        <a class="mr-2" href="{% url 'user-projects' project.profile.user.username %}">{{ project.profile.user.username }}</a>
+    </div>
+
+    <div class="card-body">
+        <img src="{{project.image.url}}" class="img-posts img-responsive" id="">
+
+        <div class="image-metadata">
+              
+        </div>
+
+        <h2><a class="" href="{% url 'project-detail' project.id %}">{{ project.title }}</a></h2>
+        <p class="">{{ project.description }}</p>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
