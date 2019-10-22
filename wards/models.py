@@ -55,21 +55,16 @@ class Review(models.Model):
 
 
 class Vote(models.Model):
+
+    ratings = (1, 1),(2, 2),(3, 3),(4, 4),(5, 5),(6, 6),(7, 7),(8, 8),(9, 9),(10, 10)
+
     project = models.ForeignKey(Project, related_name = 'project_votes', on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    design_votes = models.IntegerField(
-        default=1,
-        validators=[MaxValueValidator(10), MinValueValidator(0)])
+    design_votes = models.IntegerField(choices = ratings, default = 0)
      
-    content_votes = models.IntegerField(
-        default=1,
-        validators=[MaxValueValidator(10), MinValueValidator(0)])
-    usability_votes = models.IntegerField(
-        default=1,
-        validators=[MaxValueValidator(10), MinValueValidator(0)])
-    creativity_votes = models.IntegerField(
-        default=1,
-        validators=[MaxValueValidator(10), MinValueValidator(0)])
+    content_votes = models.IntegerField(choices = ratings, default = 0)
+    usability_votes = models.IntegerField(choices = ratings, default = 0)
+    creativity_votes = models.IntegerField(choices = ratings, default = 0)
     
 
     def __str__(self):
@@ -80,3 +75,23 @@ class Vote(models.Model):
 
     def delete_votes(self):
         self.delete()
+
+    @property
+    def get_average_single_votes(votes):
+        averaged_list = []
+        for vote in votes:
+            average_single_vote = (vote.design_votes + vote.content_votes + vote.usability_votes + vote.creativity_votes)/4
+            averaged_list.append(average_single_vote)
+
+        return averaged_list
+    @property
+    def get_average():
+        votes = Vote.objects.all()
+        average = sum(get_average_single_votes(votes))/len(votes)
+
+        return average
+
+
+
+    def get_absolute_url(self):
+        return reverse('home')
