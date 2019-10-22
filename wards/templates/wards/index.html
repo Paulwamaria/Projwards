@@ -14,7 +14,7 @@
         <h3 class="text-white">Site of the day</h3>
 
     </div>
-</div>
+
 
 
 
@@ -26,7 +26,7 @@
             <div class=" card ">
 
                 <div class="card-body">
-                    <img src="{{project.image.url}}" class="img-responsive imgs" id='imag' alt=" ">
+                    <a href="{{project.project_link}}"><img src="{{project.image.url}}" class="img-responsive imgs" id='imag' alt=" "></a>
 
                     <h6 class="text-center text-info">{{project.title}}</h6>
                     <p class="text-dark image-descrips" id="image-descrip">{{project.description |slice:":50"}}...</p>
@@ -38,9 +38,14 @@
                     <p> <img class=" prof-img" src="{{project.profile.profile_pic.url}}" id="prof-pic"> By
                         {{project.profile.user.username}}  on {{project.datepublished}}</p>
 
+
+
+                    <a href="{% url 'project-detail' project.id %}">Vote</a>
+
                     {% if project.profile == user.profile %}
 
-                    <a href="{% url 'project-detail' project.id %}">Edit</a>
+
+                    <a class="ml-3" href="{% url 'project-detail' project.id %}">Edit</a>
 
                     {% endif %}
 
