@@ -1,43 +1,76 @@
 {% extends 'wards/base.html' %}
 
-
+{% load crispy_forms_tags %}
 {% block content %}
 
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="">
 
 
-<div class="card card-default">
-    <div class="card-header">
-            <a href="{% url 'profile-detail' project.profile.user.username %}">  <img src="{{project.profile.profile_pic.url}}" class="rounded-circle prof-img img-responsive" id=""></a>
-        <a class="mr-2" href="{% url 'user-projects' project.profile.user.username %}">{{ project.profile.user.username }}</a>
-        {% if project.profile == user.profile %}
-        <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'project-update' project.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'project-delete' project.id %}">Delete</a>
-        </div>
+            <div class="card card-default">
+                <div class="card-header">
+                    <a href="{% url 'profile-detail' project.profile.user.username %}"> <img
+                            src="{{project.profile.profile_pic.url}}" class="rounded-circle prof-img img-responsive"
+                            id=""></a>
+                    <a class="mr-2"
+                        href="{% url 'user-projects' project.profile.user.username %}">{{ project.profile.user.username }}</a>
+                    {% if project.profile == user.profile %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1"
+                            href="{% url 'project-update' project.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1"
+                            href="{% url 'project-delete' project.id %}">Delete</a>
+                    </div>
 
-        {% endif %}
-    </div>
+                    {% endif %}
+                </div>
 
-    <div class="card-body">
-        <img src="{{project.image.url}}" class="img-posts img-responsive" id="">
-        <div class="image-metadata">
 
-                <div class="stat d-inline-flex">
-    
+                <div class="card-body">
+                    <img src="{{project.image.url}}" class="img-posts img-responsive" id="">
+                    <div class="image-metadata">
+
+                        <div class="stat d-inline-flex">
+
+
+                        </div>
+                        <div class="stat d-inline-flex">
+
+                        </div>
+
+
+                    </div>
+
+                    <h2><a class="" href="#">{{ project.title }}</a></h2>
+                    <a href="{{project.project_link}}">{{project.project_link}}</a>
+                    <p class="">{{ object.description }}</p>
+                    <p>{{ project.project_votes.get_average }} </p>
+
+
+              
+                         <a href = "{% url 'project-vote' project.id %}">Vote</a>
                    
+
+
+
+
+                    </form>
+
+
                 </div>
-                <div class="stat d-inline-flex">
-    
-                </div>
-    
-    
             </div>
 
-        <h2><a class="" href="#">{{ project.title }}</a></h2>
-        <a href="{{project.project_link}}">{{project.project_link}}</a>
-        <p class="">{{ object.description }}</p>
+
+        </div>
+   
+
     </div>
+
 </div>
+
+
 
 
 
