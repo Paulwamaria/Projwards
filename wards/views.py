@@ -4,7 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView,RedirectView
 from django.http import HttpResponse
+from django.urls import reverse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import ProjectSerializer, ProfileSerializer
 from .models import Project, Vote
+from .forms import VoteForm
 from users.models import Profile
 
 # Create your views here.
@@ -20,10 +25,13 @@ def index(request):
 def display_profile(request,username):
     profile = Profile.objects.get(user__username= username)
 
+    user_projects = Project.objects.filter(profile =profile).order_by('created_on')
+
     context={
-        "profile":profile
+        "profile":profile,
+        "user_projects":user_projects
     }
-    return render(request,'users/profile_detail.html',context)
+    return render(request,'wards/profile_detail.html',context)
 
 class ProjectListView(ListView):
     
@@ -45,6 +53,8 @@ class ProjectCreateView(LoginRequiredMixin,CreateView):
 
 class ProjectDetailView(DetailView):
     model = Project
+
+
 
 
 
@@ -89,14 +99,57 @@ class ProjectDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 
 class UserProjectListView(ListView):
     model = Project
-    template_name='wards/index.html'
+    template_name='wards/profile_detail.html'
     context_object_name ='projects'
     ordering = ['-created_on']
 
 
     def get_queryset(self):
         user = get_object_or_404(User, username = self.kwargs.get('username'))
+        
         return Project.objects.filter(profile=user.profile).order_by('-created_on')
+
+
+
+
+
+class VoteCreateView(LoginRequiredMixin,CreateView):
+    model = Vote
+    fields = ['design_votes', 'usability_votes', 'creativity_votes', 'content_votes']
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Overridden so we can make sure the `Project` instance exists
+        before going any further.
+        """
+        self.project = get_object_or_404(Project, pk=kwargs['pk'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.project = self.project
+        return super().form_valid(form)
+
+    def get_absolute_url(self):
+        return reverse('', kwargs={'pk': self.pk})
+
+
+class ProjectList(APIView):
+    def get(self, request, format = None):
+        all_projects = Project.objects.all()
+        serializers = ProjectSerializer(all_projects, many = True)
+        return Response(serializers.data)
+
+
+
+class ProfileList(APIView):
+    def get(self, request, format = None):
+        all_profiles = Profile.objects.all()
+        serializers = ProfileSerializer(all_projects, many = True)
+        return Response(serializers.data)
+
+
+
 
 
 
