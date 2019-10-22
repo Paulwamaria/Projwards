@@ -95,6 +95,14 @@ overflow:hidden;
     margin-left:15px;
     width:98%;
 }
+
+.big{
+   
+    position:relative;
+color:red;
+    margin-left:15px;
+    width:98%;
+}
 .img{
     width:100%;
  
@@ -123,6 +131,7 @@ overflow:hidden;
 }
 .card{
     min-height: 400px;
+    margin-left:22px;
 }
 #imag:hover {
     opacity: 0.5;
