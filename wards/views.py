@@ -149,6 +149,19 @@ class ProfileList(APIView):
         return Response(serializers.data)
 
 
+def search_results(request):
+    if 'search_project' in request.GET and request.GET["search_project"]:
+        search_term = request.GET.get("search_project")
+        searched_projects = Project.objects.filter(title__icontains=search_term)
+        message=search_term
+        return render(request, "wards/search.html", {"projects":searched_projects, "message":message})
+
+    else:
+        message = "Search term not found"
+
+        return render(request,'wards/search.html',{"message":message})
+
+
 
 
 
