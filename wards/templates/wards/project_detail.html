@@ -1,7 +1,4 @@
-{% extends 'wards/base.html' %}
-
-{% load crispy_forms_tags %}
-{% block content %}
+{% extends 'wards/base.html' %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container-fluid">
     <div class="row">
@@ -11,17 +8,11 @@
 
             <div class="card card-default">
                 <div class="card-header">
-                    <a href="{% url 'profile-detail' project.profile.user.username %}"> <img
-                            src="{{project.profile.profile_pic.url}}" class="rounded-circle prof-img img-responsive"
-                            id=""></a>
-                    <a class="mr-2"
-                        href="{% url 'user-projects' project.profile.user.username %}">{{ project.profile.user.username }}</a>
-                    {% if project.profile == user.profile %}
+                    <a href="{% url 'profile-detail' project.profile.user.username %}"> <img src="{{project.profile.profile_pic.url}}" class="rounded-circle prof-img img-responsive" id=""></a>
+                    <a class="mr-2" href="{% url 'user-projects' project.profile.user.username %}">{{ project.profile.user.username }}</a> {% if project.profile == user.profile %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1"
-                            href="{% url 'project-update' project.id %}">Update</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1"
-                            href="{% url 'project-delete' project.id %}">Delete</a>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'project-update' project.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'project-delete' project.id %}">Delete</a>
                     </div>
 
                     {% endif %}
@@ -41,17 +32,22 @@
                         </div>
 
 
+
                     </div>
 
                     <h2><a class="" href="#">{{ project.title }}</a></h2>
                     <a href="{{project.project_link}}">{{project.project_link}}</a>
                     <p class="">{{ object.description }}</p>
-                    <p>{{ project.project_votes.design_vot }} </p>
+                    <p><strong>Design</strong> {{ object.design_votes|floatformat:2 }} </p>
+                    <p><strong>Content</strong> {{ object.content_votes|floatformat:2 }} </p>
+                    <p><strong>Usability</strong> {{ object.usability_votes|floatformat:2 }} </p>
+                    <p><strong>Creativity</strong> {{ object.creativity_votes|floatformat:2 }} </p>
 
 
-              
-                         <a href = "{% url 'project-vote' project.id %}">Vote</a>
-                   
+
+
+                    <a href="{% url 'project-vote' project.id %}">Vote</a>
+
 
 
 
@@ -64,7 +60,7 @@
 
 
         </div>
-   
+
 
     </div>
 
