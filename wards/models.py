@@ -36,6 +36,34 @@ class Project(models.Model):
     def datepublished(self):
         return self.created_on.strftime('%B %d %Y')
 
+    
+    @property
+    def design_votes(self):
+       if self.votes.count() == 0:
+           return 5
+       return sum([r.design_votes for r in self.votes.all()]) / self.votes.count()
+
+        
+    @property
+    def content_votes(self):
+       if self.votes.count() == 0:
+           return 5
+       return sum([r.content_votes for r in self.votes.all()]) / self.votes.count()
+
+        
+    @property
+    def usability_votes(self):
+       if self.votes.count() == 0:
+           return 5
+       return sum([r.usability_votes for r in self.votes.all()]) / self.votes.count()
+
+        
+    @property
+    def creativity_votes(self):
+       if self.votes.count() == 0:
+           return 5
+       return sum([r.creativity_votes for r in self.votes.all()]) / self.votes.count()
+
 
 class Review(models.Model):
     
@@ -58,7 +86,7 @@ class Vote(models.Model):
 
     ratings = (1, 1),(2, 2),(3, 3),(4, 4),(5, 5),(6, 6),(7, 7),(8, 8),(9, 9),(10, 10)
 
-    project = models.ForeignKey(Project, related_name = 'project_votes', on_delete = models.CASCADE)
+    project = models.ForeignKey(Project, related_name = 'votes', on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     design_votes = models.IntegerField(choices = ratings, default = 0)
      
@@ -76,20 +104,22 @@ class Vote(models.Model):
     def delete_votes(self):
         self.delete()
 
-    @property
-    def get_average_single_votes(votes):
-        averaged_list = []
-        for vote in votes:
-            average_single_vote = (vote.design_votes + vote.content_votes + vote.usability_votes + vote.creativity_votes)/4
-            averaged_list.append(average_single_vote)
 
-        return averaged_list
-    @property
-    def get_average():
-        votes = Vote.objects.all()
-        average = sum(get_average_single_votes(votes))/len(votes)
 
-        return average
+    # @property
+    # def get_average_single_votes(votes):
+    #     averaged_list = []
+    #     for vote in votes:
+    #         average_single_vote = (vote.design_votes + vote.content_votes + vote.usability_votes + vote.creativity_votes)/4
+    #         averaged_list.append(average_single_vote)
+
+    #     return averaged_list
+    # @property
+    # def get_average():
+    #     votes = Vote.objects.all()
+    #     average = sum(get_average_single_votes(votes))/len(votes)
+
+    #     return average
 
 
 
