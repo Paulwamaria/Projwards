@@ -15,6 +15,7 @@ urlpatterns = [
     path('user/<str:username>/',UserProjectListView.as_view(), name = 'user-projects'),
     path('api/projects/', views.ProjectList.as_view()),
     path('api/profiles/', views.ProfileList.as_view()),
+    path('search/',views.search_results, name = 'search_results'),
 ]
 
 
