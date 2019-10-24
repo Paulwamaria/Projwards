@@ -28,10 +28,10 @@
                         <a class="navbar-brand text-dark inst d-inline-flex" href="{% url 'home' %}"
                             id="inst">Projwards</a>
 
-                        <form class="navbar-form d-inline-flex ml-5" role="search" action="#">
+                        <form class="navbar-form d-inline-flex ml-5" role="search" action="{% url 'search_results' %}">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="search by project name"
-                                    name="search_user">
+                                    name="search_project">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-default"><i
                                             class="glyphicon glyphicon-search"></i></button>
